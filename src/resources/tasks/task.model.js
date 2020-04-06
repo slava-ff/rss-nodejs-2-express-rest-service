@@ -6,6 +6,12 @@ class Task {
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd'
+    // title = "TITLE",
+    // order,
+    // description,
+    // userId, //assignee
+    // boardId,
+    // columnId
   } = {}) {
     this.id = id;
     this.name = name;
