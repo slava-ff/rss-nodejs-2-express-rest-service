@@ -1,5 +1,4 @@
 const { Router } = require('express');
-// const User = require('./user.model');
 const usersService = require('./user.service');
 
 const getAllUsers = async (req, res) => {

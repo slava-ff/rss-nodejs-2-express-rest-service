@@ -21,6 +21,6 @@ module.exports = express()
     next();
   })
   .use('/users', userRouter)
+  .use('/boards', taskRouter)
   .use('/boards', boardRouter)
-  .use('/tasks', taskRouter)
   .listen(PORT, () => console.log(`Server started on :${PORT}`));
