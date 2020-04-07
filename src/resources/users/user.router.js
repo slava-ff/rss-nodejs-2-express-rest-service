@@ -15,15 +15,21 @@ const createUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  console.log('getUserById:', req.body, res.body);
+  const user = await usersService.getOne(req.params.id);
+
+  res.json(user);
 };
 
 const updateUser = async (req, res) => {
-  console.log('updateUser:', req.body, res.body);
+  const user = await usersService.update(req.params.id, req.body);
+
+  res.json(user);
 };
 
 const deleteUser = async (req, res) => {
-  console.log('deleteUser:', req.body, res.body);
+  const id = await usersService.deleteOne(req.params.id);
+
+  res.json(id);
 };
 
 module.exports = Router()
