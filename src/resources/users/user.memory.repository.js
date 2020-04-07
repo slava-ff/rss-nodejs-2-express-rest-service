@@ -26,9 +26,19 @@ const update = async (idToUpdate, user) => {
   await writeDb(db);
 };
 
+const deleteUserInRelatedTasks = async (userId, db) => {
+  Object.values(db.tasks).forEach(task => {
+    if (task.userId === userId) {
+      db.tasks[task.id].userId = null;
+    }
+  });
+  return db;
+};
+
 const deleteOne = async id => {
-  const db = await readDb();
+  let db = await readDb();
   delete db.users[id];
+  db = deleteUserInRelatedTasks(id, db);
 
   await writeDb(db);
   return id;
