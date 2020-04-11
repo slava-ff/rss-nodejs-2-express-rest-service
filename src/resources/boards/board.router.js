@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const boardsService = require('./board.service');
+const NotFoundError = require('../../helpers/error.helper');
 
 const getAllBoards = async (req, res) => {
   const boards = await boardsService.getAll();
@@ -13,10 +14,12 @@ const createBoard = async (req, res) => {
   res.json(newBoard);
 };
 
-const getBoardById = async (req, res) => {
+const getBoardById = async (req, res, next) => {
   const board = await boardsService.getOne(req.params.id);
   if (!board) {
-    return res.status(404).json({});
+    next(new NotFoundError('Board not found'));
+
+    return;
   }
 
   res.json(board);

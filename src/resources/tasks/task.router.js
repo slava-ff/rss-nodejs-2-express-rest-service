@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const tasksService = require('./task.service');
+const NotFoundError = require('../../helpers/error.helper');
 
 const getAllTasks = async (req, res) => {
   const tasks = await tasksService.getAll();
@@ -13,10 +14,12 @@ const createTask = async (req, res) => {
   res.json(newTask);
 };
 
-const getTaskById = async (req, res) => {
+const getTaskById = async (req, res, next) => {
   const task = await tasksService.getOne(req.params.id);
   if (!task) {
-    return res.status(404).json({});
+    next(new NotFoundError('Task not found'));
+
+    return;
   }
 
   res.json(task);

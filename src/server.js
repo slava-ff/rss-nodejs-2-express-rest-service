@@ -42,7 +42,10 @@ process.on('unhandledRejection', (reason, promise) => {
 
 const errorHandler = (err, req, res, next) => {
   logErrors(err.message || getStatusText(INTERNAL_SERVER_ERROR));
-  res.status(INTERNAL_SERVER_ERROR).send(getStatusText(INTERNAL_SERVER_ERROR));
+
+  res
+    .status(err.status || INTERNAL_SERVER_ERROR)
+    .send(err.message || getStatusText(INTERNAL_SERVER_ERROR));
 
   next();
 };
