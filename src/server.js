@@ -40,6 +40,13 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Promise.reject(Error('unhandledRejection test'));
 
+const errorHandler = (err, req, res, next) => {
+  logErrors(err.message || getStatusText(INTERNAL_SERVER_ERROR));
+  res.status(INTERNAL_SERVER_ERROR).send(getStatusText(INTERNAL_SERVER_ERROR));
+
+  next();
+};
+
 module.exports = express()
   .use(express.json())
   .use('/', logRequests)
@@ -54,13 +61,5 @@ module.exports = express()
   .use('/users', userRouter)
   .use('/boards', taskRouter)
   .use('/boards', boardRouter)
-  .use((err, req, res, next) => {
-    logErrors(err.message || getStatusText(INTERNAL_SERVER_ERROR));
-
-    res
-      .status(INTERNAL_SERVER_ERROR)
-      .send(getStatusText(INTERNAL_SERVER_ERROR));
-
-    next();
-  })
+  .use(errorHandler)
   .listen(PORT, () => console.log(`Server started on :${PORT}`));
