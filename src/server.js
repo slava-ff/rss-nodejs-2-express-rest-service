@@ -54,7 +54,9 @@ module.exports = express()
   .use(express.json())
   .use('/', logRequests)
 
-  // uncomment the lines below and run tests to check the error handling middleware
+  // uncomment the lines below and run tests to check
+  // the error handling middleware or just run tests
+  // (there should be ones from tests)
 
   // .use('/', () => {
   //   throw Error;
