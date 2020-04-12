@@ -6,20 +6,8 @@ const logger = createLogger({
   transports: [new transports.Console()]
 });
 
-const logRequests = (req, res, next) => {
-  const { method, url, query, body } = req;
-
-  logger.info(`
-      ${method} ${url}
-      query parameters: ${JSON.stringify(query)}
-      body: ${JSON.stringify(body)}
-      `);
-
-  next();
-};
-
 const logErrors = message => {
   logger.error(`message: ${message}`);
 };
 
-module.exports = { logRequests, logErrors };
+module.exports = { logger, logErrors };

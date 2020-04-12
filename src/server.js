@@ -7,28 +7,21 @@ const { PORT } = require('./common/config');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
 const taskRouter = require('./resources/tasks/task.router');
-const { INTERNAL_SERVER_ERROR, getStatusText } = require('http-status-codes');
-const { logRequests, logErrors } = require('./helpers/logger.helper');
+const { logErrors } = require('./helpers/logger.helper');
+const logRequests = require('./middlewares/logRequests.middleware');
+const errorHandler = require('./middlewares/errorHandler.middleware');
+const confirmServiceIsRunning = require('./middlewares/rootReqs.middleware');
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
-const confirmServiceIsRunning = (req, res, next) => {
-  if (req.originalUrl === '/') {
-    res.send('Service is running!');
-    return;
-  }
-  next();
-};
-
 process
-  .on('uncaughtException', (error, origin) => {
-    logErrors(`${origin}. Captured error: ${error}`);
+  .on('uncaughtException', error => {
+    logErrors(`Uncaught exception detected: ${error}`);
     const { exit } = process;
     exit(1);
   })
-  .on('unhandledRejection', (reason, promise) => {
-    logErrors(`Unhandled rejection detected: ${reason.message}.
-  Promise: ${promise}`);
+  .on('unhandledRejection', error => {
+    logErrors(`Unhandled rejection detected: ${error}.`);
     const { exit } = process;
     exit(1);
   });
@@ -39,23 +32,12 @@ process
 // uncomment the line below to check the unhandled rejection detection
 // Promise.reject(Error('unhandledRejection test'));
 
-const errorHandler = (err, req, res, next) => {
-  logErrors(err.message || getStatusText(INTERNAL_SERVER_ERROR));
-
-  res
-    .status(err.status || INTERNAL_SERVER_ERROR)
-    .send(err.message || getStatusText(INTERNAL_SERVER_ERROR));
-
-  next();
-};
-
 module.exports = express()
   .use(express.json())
-  .use('/', logRequests)
+  .use(logRequests)
 
-  // uncomment the lines below and run tests to check
-  // the error handling middleware or just run tests
-  // (there should be ones from tests)
+  // uncomment the lines below and run tests to check the error handling
+  // middleware or just run tests (there should be ones from tests)
 
   // .use('/', () => {
   //   throw Error;
