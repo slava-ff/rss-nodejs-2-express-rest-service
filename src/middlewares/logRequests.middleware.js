@@ -1,4 +1,4 @@
-const { logger } = require('../helpers/logger.helper');
+const logger = require('../helpers/logger.helper');
 
 const logRequests = (req, res, next) => {
   const { method, url, query, body } = req;

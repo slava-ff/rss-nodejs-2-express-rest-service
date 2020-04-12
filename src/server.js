@@ -7,7 +7,7 @@ const { PORT } = require('./common/config');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
 const taskRouter = require('./resources/tasks/task.router');
-const { logErrors } = require('./helpers/logger.helper');
+const logger = require('./helpers/logger.helper');
 const logRequests = require('./middlewares/logRequests.middleware');
 const errorHandler = require('./middlewares/errorHandler.middleware');
 const confirmServiceIsRunning = require('./middlewares/rootReqs.middleware');
@@ -16,12 +16,12 @@ const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 process
   .on('uncaughtException', error => {
-    logErrors(`Uncaught exception detected: ${error}`);
+    logger.error(`Uncaught exception detected: ${error.stack}`);
     const { exit } = process;
     exit(1);
   })
   .on('unhandledRejection', error => {
-    logErrors(`Unhandled rejection detected: ${error}.`);
+    logger.error(`Unhandled rejection detected: ${error.stack}.`);
     const { exit } = process;
     exit(1);
   });

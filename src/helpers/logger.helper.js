@@ -6,8 +6,4 @@ const logger = createLogger({
   transports: [new transports.Console()]
 });
 
-const logErrors = message => {
-  logger.error(`message: ${message}`);
-};
-
-module.exports = { logger, logErrors };
+module.exports = logger;
