@@ -1,4 +1,3 @@
-/* eslint-disable no-process-exit */
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
@@ -21,23 +20,23 @@ const confirmServiceIsRunning = (req, res, next) => {
   next();
 };
 
-process.on('uncaughtException', (error, origin) => {
-  logErrors(`${origin}. Captured error: ${error}`);
-  process.exit(1);
-});
+process
+  .on('uncaughtException', (error, origin) => {
+    logErrors(`${origin}. Captured error: ${error}`);
+    const { exit } = process;
+    exit(1);
+  })
+  .on('unhandledRejection', (reason, promise) => {
+    logErrors(`Unhandled rejection detected: ${reason.message}.
+  Promise: ${promise}`);
+    const { exit } = process;
+    exit(1);
+  });
 
 // uncomment the line below to check the uncaught exception capturing:
-
 // throw Error('uncaughtException test');
 
-process.on('unhandledRejection', (reason, promise) => {
-  logErrors(`Unhandled rejection detected: ${reason.message}.
-  Promise: ${promise}`);
-  process.exit(1);
-});
-
 // uncomment the line below to check the unhandled rejection detection
-
 // Promise.reject(Error('unhandledRejection test'));
 
 const errorHandler = (err, req, res, next) => {

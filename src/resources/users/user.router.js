@@ -1,34 +1,54 @@
 const { Router } = require('express');
 const usersService = require('./user.service');
 
-const getAllUsers = async (req, res) => {
-  const users = await usersService.getAll();
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await usersService.getAll();
 
-  res.json(users);
+    return res.json(users);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const createUser = async (req, res) => {
-  const newUser = await usersService.create(req.body);
+const createUser = async (req, res, next) => {
+  try {
+    const newUser = await usersService.create(req.body);
 
-  res.json(newUser);
+    return res.json(newUser);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const getUserById = async (req, res) => {
-  const user = await usersService.getOne(req.params.id);
+const getUserById = async (req, res, next) => {
+  try {
+    const user = await usersService.getOne(req.params.id);
 
-  res.json(user);
+    return res.json(user);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const updateUser = async (req, res) => {
-  const user = await usersService.update(req.params.id, req.body);
+const updateUser = async (req, res, next) => {
+  try {
+    const user = await usersService.update(req.params.id, req.body);
 
-  res.json(user);
+    return res.json(user);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const deleteUser = async (req, res) => {
-  const id = await usersService.deleteOne(req.params.id);
+const deleteUser = async (req, res, next) => {
+  try {
+    const id = await usersService.deleteOne(req.params.id);
 
-  res.json(id);
+    return res.json(id);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 module.exports = Router()

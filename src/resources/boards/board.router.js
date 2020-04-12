@@ -2,39 +2,58 @@ const { Router } = require('express');
 const boardsService = require('./board.service');
 const NotFoundError = require('../../helpers/error.helper');
 
-const getAllBoards = async (req, res) => {
-  const boards = await boardsService.getAll();
+const getAllBoards = async (req, res, next) => {
+  try {
+    const boards = await boardsService.getAll();
 
-  res.json(boards);
+    return res.json(boards);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const createBoard = async (req, res) => {
-  const newBoard = await boardsService.create(req.body);
+const createBoard = async (req, res, next) => {
+  try {
+    const newBoard = await boardsService.create(req.body);
 
-  res.json(newBoard);
+    return res.json(newBoard);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 const getBoardById = async (req, res, next) => {
-  const board = await boardsService.getOne(req.params.id);
-  if (!board) {
-    next(new NotFoundError('Board not found'));
+  try {
+    const board = await boardsService.getOne(req.params.id);
+    if (!board) {
+      next(new NotFoundError('Board not found'));
 
-    return;
+      return;
+    }
+    return res.json(board);
+  } catch (err) {
+    return next(err);
   }
-
-  res.json(board);
 };
 
-const updateBoard = async (req, res) => {
-  const board = await boardsService.update(req.params.id, req.body);
+const updateBoard = async (req, res, next) => {
+  try {
+    const board = await boardsService.update(req.params.id, req.body);
 
-  res.json(board);
+    return res.json(board);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const deleteBoard = async (req, res) => {
-  const id = await boardsService.deleteOne(req.params.id);
+const deleteBoard = async (req, res, next) => {
+  try {
+    const id = await boardsService.deleteOne(req.params.id);
 
-  res.json(id);
+    return res.json(id);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 module.exports = Router()
