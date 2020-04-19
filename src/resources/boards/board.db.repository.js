@@ -16,15 +16,6 @@ const update = async (idToUpdate, board) => {
   return Board.updateOne({ _id: idToUpdate }, board);
 };
 
-// const deleteRelatedTasks = async (boardId, db) => {
-//   Object.values(db.tasks).forEach(task => {
-//     if (task.boardId === boardId) {
-//       delete db.tasks[task.id];
-//     }
-//   });
-//   return db;
-// };
-
 const deleteOne = async id => {
   return Board.findByIdAndDelete(id);
 };

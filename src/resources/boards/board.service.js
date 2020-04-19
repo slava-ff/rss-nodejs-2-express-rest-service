@@ -1,5 +1,6 @@
 const Board = require('./board.model');
 const boardsRepo = require('./board.db.repository');
+const { deleteManyTasks } = require('../tasks/task.service');
 
 const getAll = async () => {
   const boards = await boardsRepo.getAll();
@@ -26,7 +27,7 @@ const update = async (id, board) => {
 
 const deleteOne = async id => {
   const deletedBoard = await boardsRepo.deleteOne(id);
-  // to delete Related tasks
+  await deleteManyTasks(id);
   return deletedBoard._id;
 };
 

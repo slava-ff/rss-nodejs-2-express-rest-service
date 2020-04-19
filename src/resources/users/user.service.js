@@ -1,5 +1,6 @@
 const User = require('./user.model');
 const usersRepo = require('./user.db.repository');
+const { updateManyTasks } = require('../tasks/task.service');
 
 const getAll = async () => {
   const users = await usersRepo.getAll();
@@ -22,7 +23,7 @@ const update = async (id, user) => {
 
 const deleteOne = async id => {
   const deletedUser = await usersRepo.deleteOne(id);
-  // to delete User In Related Tasks tasks
+  await updateManyTasks(id);
   return deletedUser._id;
 };
 

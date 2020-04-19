@@ -20,4 +20,20 @@ const deleteOne = async id => {
   return Task.findByIdAndDelete(id);
 };
 
-module.exports = { getAll, create, getOne, update, deleteOne };
+const deleteMany = async boardId => {
+  return Task.deleteMany({ boardId });
+};
+
+const updateMany = async userId => {
+  return Task.updateMany({ userId }, { userId: null });
+};
+
+module.exports = {
+  getAll,
+  create,
+  getOne,
+  update,
+  deleteOne,
+  deleteMany,
+  updateMany
+};

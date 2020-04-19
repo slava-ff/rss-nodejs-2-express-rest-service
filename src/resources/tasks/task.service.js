@@ -29,4 +29,22 @@ const deleteOne = async id => {
   return deletedTask._id;
 };
 
-module.exports = { getAll, create, getOne, update, deleteOne };
+const deleteManyTasks = async boardId => {
+  const deletedTasks = await tasksRepo.deleteMany(boardId);
+  return deletedTasks;
+};
+
+const updateManyTasks = async userId => {
+  const updatedTasks = await tasksRepo.updateMany(userId);
+  return updatedTasks;
+};
+
+module.exports = {
+  getAll,
+  create,
+  getOne,
+  update,
+  deleteOne,
+  deleteManyTasks,
+  updateManyTasks
+};
