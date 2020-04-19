@@ -16,15 +16,6 @@ const update = async (idToUpdate, user) => {
   return User.updateOne({ _id: idToUpdate }, user);
 };
 
-// const deleteUserInRelatedTasks = async (userId, db) => {
-// Object.values(db.tasks).forEach(task => {
-//   if (task.userId === userId) {
-//     db.tasks[task.id].userId = null;
-//   }
-// });
-// return db;
-// };
-
 const deleteOne = async id => {
   return User.findByIdAndDelete(id);
 };
