@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { MONGO_CONNECTION_STRING } = require('../common/config');
 
 const connectToDb = startServer => {
-  mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
+  mongoose.connect(MONGO_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
