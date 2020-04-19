@@ -15,22 +15,6 @@ const connectToDb = startServer => {
   });
 };
 
-// let dbTemp = {
-//   users: {},
-//   tasks: {},
-//   boards: {}
-// };
-
-// const readDb = async () => {
-//   return dbTemp;
-// };
-
-// const writeDb = async dbUpdate => {
-//   dbTemp = dbUpdated;
-// };
-
 module.exports = {
-  // readDb,
-  // writeDb,
   connectToDb
 };

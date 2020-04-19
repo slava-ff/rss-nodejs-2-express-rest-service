@@ -22,7 +22,7 @@ const update = async (id, user) => {
 
 const deleteOne = async id => {
   const deletedUser = await usersRepo.deleteOne(id);
-  // to delete User's tasks
+  // to delete User In Related Tasks tasks
   return deletedUser._id;
 };
 
