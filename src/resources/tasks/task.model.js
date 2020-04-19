@@ -34,6 +34,7 @@ const taskSchema = new mongoose.Schema({
 
 taskSchema.statics.toResponse = task => {
   const { id, title, order, description, userId, boardId, columnId } = task;
+
   return { id, title, order, description, userId, boardId, columnId };
 };
 

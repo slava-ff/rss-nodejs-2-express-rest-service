@@ -4,6 +4,7 @@ const tasksRepo = require('./task.db.repository');
 
 const getAll = async () => {
   const tasks = await tasksRepo.getAll();
+
   return tasks.map(Task.toResponse);
 };
 
