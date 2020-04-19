@@ -1,18 +1,4 @@
-const express = require('express');
-const swaggerUI = require('swagger-ui-express');
-const path = require('path');
-const YAML = require('yamljs');
-
-const { PORT } = require('./common/config');
-const userRouter = require('./resources/users/user.router');
-const boardRouter = require('./resources/boards/board.router');
-const taskRouter = require('./resources/tasks/task.router');
 const logger = require('./helpers/logger.helper');
-const logRequests = require('./middlewares/logRequests.middleware');
-const errorHandler = require('./middlewares/errorHandler.middleware');
-const confirmServiceIsRunning = require('./middlewares/rootReqs.middleware');
-
-const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 process
   .on('uncaughtException', error => {
@@ -26,22 +12,23 @@ process
     exit(1);
   });
 
-// uncomment the line below to check the uncaught exception capturing:
-// throw Error('uncaughtException test');
+const express = require('express');
+const swaggerUI = require('swagger-ui-express');
+const path = require('path');
+const YAML = require('yamljs');
 
-// uncomment the line below to check the unhandled rejection detection
-// Promise.reject(Error('unhandledRejection test'));
+const { PORT } = require('./common/config');
+const userRouter = require('./resources/users/user.router');
+const boardRouter = require('./resources/boards/board.router');
+const taskRouter = require('./resources/tasks/task.router');
+const logRequests = require('./middlewares/logRequests.middleware');
+const errorHandler = require('./middlewares/errorHandler.middleware');
+const confirmServiceIsRunning = require('./middlewares/rootReqs.middleware');
 
+const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 module.exports = express()
   .use(express.json())
   .use(logRequests)
-
-  // uncomment the lines below and run tests to check the error handling
-  // middleware or just run tests (there should be ones from tests)
-
-  // .use('/', () => {
-  //   throw Error;
-  // })
   .use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
   .use('/', confirmServiceIsRunning)
   .use('/users', userRouter)
