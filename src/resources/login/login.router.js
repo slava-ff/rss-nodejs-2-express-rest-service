@@ -1,8 +1,11 @@
 const { Router } = require('express');
+const loginService = require('./login.service');
 
 const loginAccept = async (req, res, next) => {
   try {
-    return res.json();
+    const token = await loginService.checkLogin(req.body);
+
+    return res.json(token);
   } catch (err) {
     return next(err);
   }

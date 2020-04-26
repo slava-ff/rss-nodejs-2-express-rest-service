@@ -11,7 +11,6 @@ const connectToDb = startServer => {
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', () => {
     console.log('Database is connected');
-    db.dropDatabase(console.log('DB is successfully dropped'));
     startServer();
   });
 };

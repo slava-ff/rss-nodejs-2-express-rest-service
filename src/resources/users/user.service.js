@@ -15,8 +15,8 @@ const create = async user => {
   return User.toResponse(savedUser);
 };
 
-const getOne = async id => {
-  const user = await usersRepo.getOne(id);
+const getOneById = async id => {
+  const user = await usersRepo.getOneById(id);
 
   if (!user) {
     throw new NotFoundError('User not found');
@@ -46,4 +46,4 @@ const deleteOne = async id => {
   return User.toResponse(deletedUser);
 };
 
-module.exports = { getAll, create, getOne, update, deleteOne };
+module.exports = { getAll, create, getOneById, update, deleteOne };

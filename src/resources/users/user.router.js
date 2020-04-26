@@ -23,7 +23,7 @@ const createUser = async (req, res, next) => {
 
 const getUserById = async (req, res, next) => {
   try {
-    const user = await usersService.getOne(req.params.id);
+    const user = await usersService.getOneById(req.params.id);
 
     return res.json(user);
   } catch (err) {
