@@ -10,6 +10,7 @@ const taskRouter = require('./resources/tasks/task.router');
 const logRequests = require('./middlewares/logRequests.middleware');
 const errorHandler = require('./middlewares/errorHandler.middleware');
 const confirmServiceIsRunning = require('./middlewares/rootReqs.middleware');
+const authentication = require('./middlewares/auth.middleware');
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
@@ -19,7 +20,7 @@ module.exports = express()
   .use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
   .use('/', confirmServiceIsRunning)
   .use('/login', loginRouter)
-  .use('/users', userRouter)
-  .use('/boards', taskRouter)
-  .use('/boards', boardRouter)
+  .use('/users', authentication, userRouter)
+  .use('/boards', authentication, taskRouter)
+  .use('/boards', authentication, boardRouter)
   .use(errorHandler);

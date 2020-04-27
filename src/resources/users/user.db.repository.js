@@ -13,7 +13,7 @@ const getOneById = async id => {
 };
 
 const getOneByLogin = async login => {
-  return User.findOne(login);
+  return User.findOne({ login });
 };
 
 const update = async (idToUpdate, user) => {

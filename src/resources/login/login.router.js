@@ -5,7 +5,7 @@ const loginAccept = async (req, res, next) => {
   try {
     const token = await loginService.checkLogin(req.body);
 
-    return res.json(token);
+    return res.send({ token });
   } catch (err) {
     return next(err);
   }

@@ -10,4 +10,28 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = NotFoundError;
+class AuthError extends Error {
+  constructor() {
+    super();
+
+    Error.captureStackTrace(this, this.constructor);
+
+    this.name = this.constructor.name;
+    this.message = 'Unauthorized';
+    this.status = 401;
+  }
+}
+
+class ForbiddenError extends Error {
+  constructor() {
+    super();
+
+    Error.captureStackTrace(this, this.constructor);
+
+    this.name = this.constructor.name;
+    this.message = 'Forbidden';
+    this.status = 403;
+  }
+}
+
+module.exports = { NotFoundError, AuthError, ForbiddenError };

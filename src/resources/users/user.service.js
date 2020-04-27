@@ -1,4 +1,4 @@
-const NotFoundError = require('../../helpers/error.helper');
+const { NotFoundError } = require('../../helpers/error.helper');
 const User = require('./user.model');
 const usersRepo = require('./user.db.repository');
 const { updateManyTasks } = require('../tasks/task.service');
