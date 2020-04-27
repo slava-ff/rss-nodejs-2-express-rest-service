@@ -9,7 +9,7 @@ const checkLogin = async ({ login, password }) => {
   if (!user || (await !user.comparePassword(password))) {
     throw new ForbiddenError();
   } else {
-    const payload = { userId: user._id, login };
+    const payload = { userId: user._id, login: user.login };
     const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: 10 });
 
     return token;
